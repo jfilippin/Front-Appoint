@@ -1,0 +1,46 @@
+*{
+    font-size: wd;
+}
+
+.form-title{
+    text-align: center;
+}
+
+.form{
+    border: 2px solid;
+    border-radius: 10px;
+    padding: 20px;
+    background-color: white;
+
+    margin: 0 auto;
+    width: 40%;
+    max-width: auto;
+}
+
+.btn {
+    width: 30%;
+    padding: 5px;
+    display: inline-block;
+    border-radius: 8px;
+    margin: 5px;
+}
+
+.appointBtn{
+    margin-left: auto;
+    margin-right: 10px;
+}
+
+.appointBtn.btn{
+    width: 2px
+}
+
+.logo{
+    width: 10%;
+    height: auto;
+    margin-left: 5px;
+}
+
+.btnSair{
+    margin-left: 10px;
+}
+
