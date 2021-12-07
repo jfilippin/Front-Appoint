@@ -8,7 +8,7 @@ class AppointList extends React.Component {
         super(props);
 
         this.state = {
-            id_consulta: '0'
+            id_consulta: ''
         }
         
         this.getTable = this.getTable.bind(this);
@@ -21,14 +21,14 @@ class AppointList extends React.Component {
     }
 
     getTable(){
-	   const token = getToken();
-	   const options = {
-		   method: 'get',
-		   headers: {
-			   'Content-Type': 'application/json',
-			   'Authorization': `Bearer ${token}`
-		   }
-	   }
+	    const token = getToken();
+	    const options = {
+		    method: 'get',
+		    headers: {
+		 	   'Content-Type': 'application/json',
+		 	   'Authorization': `Bearer ${token}`
+		    }
+	    }
 
         fetch('http://ec2-34-201-253-51.compute-1.amazonaws.com:3000/appointmentlist', options)
 		.then(res => {
@@ -58,13 +58,17 @@ class AppointList extends React.Component {
     handleChange(e){
         this.setState({
 			[e.target.className]: e.target.id
-		});
-        
-        if(this.state.id_consulta !== 0){
-            $("#remarcar").removeAttr("disabled");
-            $("#desmarcar").removeAttr("disabled");
-        }
+		}, () => {
+            if(this.state.id_consulta !== ''){
+                $("#remarcar").removeAttr("disabled");
+                $("#desmarcar").removeAttr("disabled");
+            }
 
+            if($("#tbody tr").hasClass("selecionada")){
+                $("#tbody tr").removeAttr("class");
+            }
+            document.getElementById(this.state.id_consulta).classList.add("selecionada");
+        })
     }
 
     handleDelete(e){
@@ -100,8 +104,8 @@ class AppointList extends React.Component {
         <>
             <nav className="navbar navbar-expand-lg navbar-light bg-light">
 			    <img src={require("../img/logo.png")} className="logo" id="logo" alt="Clínica Médica Oliveira Cohen"></img>
-                <div class="btn-group" role="group">
-                    <button type="button" class="logoutBtn btn btn-outline-primary" onClick="logout">Sair</button>
+                <div className="btn-group" role="group">
+                    <button type="button" className="logoutBtn btn btn-outline-primary">Sair</button>
                 </div>
 
                 <form className="appointBtn btn-group" role="group" onSubmit={this.handleDelete}>

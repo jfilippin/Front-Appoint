@@ -47,20 +47,25 @@ class Login extends React.Component {
 	
 	render(){
 		return (
-		<div className="container">        
-         	<h1 className="form-title">Clínica médica</h1>
-		 		<form className="form" method="POST" onSubmit={this.handleSubmit}>
-		 			<div className="form-group">
-		 				<input type="text" className="form-control" id="email_paciente" name="email_paciente" onChange={this.handleChange} placeholder="Email" required/>
-		 			</div><br/>
+		<>
+			<nav className="navbar navbar-expand-lg navbar-light bg-light">
+			    <img src={require("../img/logo.png")} className="logo" id="logo" alt="Clínica Médica Oliveira Cohen"></img>
+		    </nav>
+			<div className="container">        
+         		<h1 className="form-title">Clínica médica</h1>
+		 			<form className="form" method="POST" onSubmit={this.handleSubmit}>
+		 				<div className="form-group">
+		 					<input type="text" className="form-control" id="email_paciente" name="email_paciente" onChange={this.handleChange} placeholder="Email" required/>
+		 				</div><br/>
 
-		 			<div className="form-group">
-		 	   			<input type="password" className="form-control" id="senha_paciente" name="senha_paciente" onChange={this.handleChange} placeholder="Senha" required/>
-		 			</div><br/>
+		 				<div className="form-group">
+		 	   				<input type="password" className="form-control" id="senha_paciente" name="senha_paciente" onChange={this.handleChange} placeholder="Senha" required/>
+		 				</div><br/>
 
-		 			<button type="submit" className="btn btn-success">Entrar</button>
-                 	<a type="button" className="btn btn-outline-primary" href="http://ec2-3-223-180-48.compute-1.amazonaws.com:3000/register">Cadastrar-se</a>
-		 		</form>
-		</div>);
+		 				<button type="submit" className="btn btn-success">Entrar</button>
+                 		<a type="button" className="btn btn-outline-primary" href="http://ec2-3-223-180-48.compute-1.amazonaws.com:3000/register">Cadastrar-se</a>
+		 			</form>
+			</div>
+		</>);
 	}
 } export default Login;
