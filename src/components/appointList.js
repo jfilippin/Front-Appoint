@@ -42,7 +42,6 @@ class AppointList extends React.Component {
 			  for(var i = 0; i < data[0].length; i++){
 				  $('#tbody').append(`
                     <tr id="${data[0][i].id_consulta}">
-                        <td class="id_consulta" id="${data[0][i].id_consulta}"></td>
                         <td class="id_consulta" id="${data[0][i].id_consulta}">${data[0][i].especialidade}</td>
 				        <td class="id_consulta" id="${data[0][i].id_consulta}">${Moment(data[0][i].inicio_consulta).format('DD/MM/YYYY hh:mm')}</td>
                         <td class="id_consulta" id="${data[0][i].id_consulta}">${Moment(data[0][i].fim_consulta).format('DD/MM/YYYY hh:mm')}</td>
@@ -119,7 +118,6 @@ class AppointList extends React.Component {
                     <table className="table table-striped table-hover table-bordered">
                         <thead>
                             <tr>
-                                <th>#</th>
                                 <th>Área médica</th>
                                 <th>Início da consulta</th>
                                 <th>Término da consulta</th>
