@@ -10,7 +10,7 @@ class AppointList extends React.Component {
         this.state = {
             id_consulta: ''
         }
-        
+
         this.getTable = this.getTable.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
@@ -51,7 +51,12 @@ class AppointList extends React.Component {
                         <td class="id_consulta" id="${data[0][i].id_consulta}">${data[0][i].formaPagamento}</td>
 				    </tr>`)
 			  }
-		}).catch(err => alert(err));
+		}).catch(err => {
+            if(err){
+                alert(err);
+                logout();
+            }
+        });
     }
 
     handleChange(e){
@@ -95,17 +100,15 @@ class AppointList extends React.Component {
                window.location.href="/appointList";
         }).catch(err => {
                alert(err);
+               logout();
         })
     }
 
     render(){
         return(
-        <>
+        <div>
             <nav className="navbar navbar-expand-lg navbar-light bg-light">
 			    <img src={require("../img/logo.png")} className="logo" id="logo" alt="Clínica Médica Oliveira Cohen"></img>
-                <div className="btn-group" role="group">
-                    <button type="button" className="logoutBtn btn btn-outline-primary">Sair</button>
-                </div>
 
                 <form className="appointBtn btn-group" role="group" onSubmit={this.handleDelete}>
                         <a className="btn btn-primary" href="/appointment">Marcar consulta</a>
@@ -133,6 +136,6 @@ class AppointList extends React.Component {
                 <div/>
             </div>
         </div>
-        </>);
+        </div>);
     }
 } export default AppointList

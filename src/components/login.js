@@ -47,7 +47,7 @@ class Login extends React.Component {
 	
 	render(){
 		return (
-		<>
+			<div>
 			<nav className="navbar navbar-expand-lg navbar-light bg-light">
 			    <img src={require("../img/logo.png")} className="logo" id="logo" alt="Clínica Médica Oliveira Cohen"></img>
 		    </nav>
@@ -66,6 +66,7 @@ class Login extends React.Component {
                  		<a type="button" className="btn btn-outline-primary" href="http://ec2-3-223-180-48.compute-1.amazonaws.com:3000/register">Cadastrar-se</a>
 		 			</form>
 			</div>
-		</>);
+			</div>
+		);
 	}
 } export default Login;

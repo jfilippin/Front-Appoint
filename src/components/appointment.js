@@ -1,4 +1,5 @@
 import React from 'react';
+import $ from 'jquery';
 import { getToken, logout } from '../utils/auth';
 
 class Appointment extends React.Component {
@@ -13,18 +14,16 @@ class Appointment extends React.Component {
             inicio_consulta: ''
         }
         
-        this.initForm = this.initForm.bind(this);
-
-        this.handleEspecialidades = this.handleChangeEspecialidades.bind(this);
+        this.handleEspecialidades = this.handleEspecialidades.bind(this);
         this.handleClinicas = this.handleClinicas.bind(this);
         this.handleFormaPagamento = this.handleFormaPagamento.bind(this);
         this.handleMedicos = this.handleMedicos.bind(this);
-        this.horarioConsulta = this.horarioConsulta.bind(this);
+        this.handleHorarioConsulta = this.handleHorarioConsulta.bind(this);
 
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    initForm(e){
+    componentDidMount(){
         const token = getToken();
             
         const options = {
@@ -212,7 +211,7 @@ class Appointment extends React.Component {
 
     render(){
         return (
-        <>
+            <div>
             <nav className="navbar navbar-expand-lg navbar-light bg-light">
 			    <img src={require("../img/logo.png")} className="logo" id="logo" alt="Clínica Médica Oliveira Cohen"></img>
 		    </nav>
@@ -226,7 +225,7 @@ class Appointment extends React.Component {
                     </div><br/>
 
                     <div className="form-group">
-                        <label>Selecione o local da consulta <strong>*</strong></label><br/>
+                        <label>Selecione a clínica desejada <strong>*</strong></label><br/>
                         <select className="form-control" id="clinicas" name="clinicas" onChange={this.handleClinicas} disabled required></select>
                     </div><br/>
 
@@ -253,6 +252,6 @@ class Appointment extends React.Component {
                     <a className="btn btn-outline-danger" href="/appointList">Cancelar</a>
                 </form><br/>
             </div>
-        </>);
+            </div>);
     }
 } export default Appointment

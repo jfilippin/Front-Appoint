@@ -24,7 +24,7 @@ function App() {
 				isAuth() ? <Navigate to='/appointList'/> : <AppointList/>
 			)}/>
 
-			<Route path='/appointment' render={() => (
+			<Route path='/appointment' element={<Appointment/>} render={() => (
 				isAuth() ? <Navigate to='/appointment'/> : <Appointment/>
 			)}/>
 		</Routes>

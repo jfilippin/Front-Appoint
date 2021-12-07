@@ -2,6 +2,7 @@ import React from 'react';
 import $ from 'jquery';
 import InputMask from 'react-input-mask';
 
+/* eslint-disable */
 class Register extends React.Component {
 	constructor(props){
 		super(props);
@@ -137,7 +138,7 @@ class Register extends React.Component {
 
 	render(){
 		return (
-			<>
+			<div>
 				<nav className="navbar navbar-expand-lg navbar-light bg-light">
 				    <img src={require("../img/logo.png")} className="logo" id="logo" alt="Clínica Médica Oliveira Cohen"></img>
 			    </nav>
@@ -227,6 +228,6 @@ class Register extends React.Component {
 						<a type="button" className="btn btn-outline-secondary" href="http://ec2-3-223-180-48.compute-1.amazonaws.com:3000/">Voltar</a>
          			</form><br/>
 		 		</div>
-			</>);
+			</div>);
 	}
 } export default Register;
