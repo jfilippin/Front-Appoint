@@ -1,5 +1,5 @@
 *{
-    font-size: wd;
+    font-size: auto;
 }
 
 .form-title{
@@ -44,3 +44,6 @@
     margin-left: 10px;
 }
 
+.selecionada{
+    background-color: #bfe6ff;
+}
