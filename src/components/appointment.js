@@ -95,13 +95,12 @@ class Appointment extends React.Component {
     }
 
     handleClinicas(e){
-        console.log("opa");
-
         this.setState({
             [e.target.name]: e.target.value
         }, () => {
             if(this.state.id_clinica !== ''){
                 $("#id_FormasDePagamento").removeAttr("disabled");
+                this.handleEnderecos();
             }
             
             const token = getToken();
@@ -136,34 +135,38 @@ class Appointment extends React.Component {
 		    });
         });
 
-        
-        this.handleEnderecos();
     }
 
-    handleEnderecos(){
-        console.log("cheguei");
-
+    handleEnderecos(e){
         const token = getToken();
-            
+        
         const options = {
             method: 'post',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             },
-            body: JSON.stringify(this.state.id_clinica)
+            body: JSON.stringify(this.state)
         }
+
+        console.log(JSON.stringify(this.state));
 
         fetch('http://ec2-34-201-253-51.compute-1.amazonaws.com:3000/makeAppointment/enderecos', options)
 		.then(res => {
    			return res.json();
 		})
 		.then(data => { 
-            console.log(data);
+            $('input[name="id_endereco"]').val(data.endereco[0].nome_rua);
+            $('input[name="id_endereco"]').attr("id", data.endereco[0].id_endereco);
+            
+            var id_endereco = $('input[name="id_endereco"]').attr("id");
+            
+            this.state.id_endereco = id_endereco;
         })
         .catch(err => {
             alert(err);
-        })
+        });
+
     }
 
     handleFormaPagamento(e){
@@ -227,6 +230,8 @@ class Appointment extends React.Component {
 
     handleSubmit(e){
         e.preventDefault();
+
+        console.log(this.state);
 
         const token = getToken();
             
