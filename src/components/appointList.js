@@ -107,7 +107,7 @@ class AppointList extends React.Component {
     render(){
         return(
         <div>
-            <nav className="navbar navbar-expand-lg navbar-light bg-light">
+            <nav className="navbar navbar-expand-lg">
 			    <img src={require("../img/logo.png")} className="logo" id="logo" alt="Clínica Médica Oliveira Cohen"></img>
 
                 <form className="appointBtn btn-group" role="group" onSubmit={this.handleDelete}>
@@ -117,6 +117,7 @@ class AppointList extends React.Component {
 		    </nav>
 
             <div className="container">
+            <h1 className="form-title">Suas consultas</h1>
                 <div className="table-responsive">
                     <table className="table table-striped table-hover table-bordered">
                         <thead>

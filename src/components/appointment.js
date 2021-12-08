@@ -1,6 +1,7 @@
 import React from 'react';
 import $ from 'jquery';
 import { getToken, logout } from '../utils/auth';
+import Moment from 'moment';
 
 class Appointment extends React.Component {
     constructor(props) {
@@ -11,11 +12,13 @@ class Appointment extends React.Component {
             id_clinica: '',
             id_FormasDePagamento: '',
             id_medico: '',
-            inicio_consulta: ''
+            inicio_consulta: '',
+            id_endereco: ''
         }
         
         this.handleEspecialidades = this.handleEspecialidades.bind(this);
         this.handleClinicas = this.handleClinicas.bind(this);
+        this.handleEnderecos = this.handleEnderecos.bind(this);
         this.handleFormaPagamento = this.handleFormaPagamento.bind(this);
         this.handleMedicos = this.handleMedicos.bind(this);
         this.handleHorarioConsulta = this.handleHorarioConsulta.bind(this);
@@ -40,7 +43,7 @@ class Appointment extends React.Component {
 		})
 		.then(data => {
 		    for(var i = 0; i < data.especialidades.length; i++){
-			    $("#especialidade").append(`
+			    $("#id_especialidade").append(`
    		    		<option value="${data.especialidades[i].id_especialidade}">${data.especialidades[i].especialidade}</option>
 			    `)
    			}
@@ -55,8 +58,8 @@ class Appointment extends React.Component {
         this.setState({
             [e.target.name]: e.target.value
         }, () => {
-            if(this.state.id_especialidade !== ''){
-                $("#clinicas").removeAttr("disabled");
+            if(this.state.id_especialidade != null){
+                $("#id_clinica").removeAttr("disabled");
             }
 
             const token = getToken();
@@ -74,12 +77,14 @@ class Appointment extends React.Component {
    				return res.json();
 		    })
 		    .then(data => {
-			    for(var i = 0; i < data.clinicas.length; i++){
-                    $("#clinicas").empty();
-
-				    $("#clinicas").append(`
-   						<option value="${data.clinicas[i].id_clinica}">${data.clinicas[i].clinica}</option>
-				    `)
+                if(data.err){
+                    alert(data.err);
+                } 
+                $("#id_clinica").empty();
+                for(var i = 0; i < data.clinicas.length; i++){                   
+				    $("#id_clinica").append(`
+   						<option value="${data.clinicas[i].id_clinica}" class="${data.clinicas[i].Enderecos_id_endereco}">${data.clinicas[i].nome_clinica}</option>
+				    `);
    				}
 		    }).catch(err => {
 			    if(err){
@@ -90,13 +95,15 @@ class Appointment extends React.Component {
     }
 
     handleClinicas(e){
+        console.log("opa");
+
         this.setState({
             [e.target.name]: e.target.value
         }, () => {
             if(this.state.id_clinica !== ''){
-                $("#FormasDePagamento").removeAttr("disabled");
+                $("#id_FormasDePagamento").removeAttr("disabled");
             }
-
+            
             const token = getToken();
             
             const options = {
@@ -107,15 +114,19 @@ class Appointment extends React.Component {
     			}
 		    }
         
-            fetch('http://ec2-34-201-253-51.compute-1.amazonaws.com:3000/makeAppointment/especialidades', options)
+            fetch('http://ec2-34-201-253-51.compute-1.amazonaws.com:3000/makeAppointment/FormasDePagamento', options)
 		    .then(res => {
    				return res.json();
 		    })
 		    .then(data => {
-			    for(var i = 0; i < data.FormasDePagamento.length; i++){
-                    $("#FormasDePagamento").empty();
-				    $("#FormasDePagamento").append(`
-   						<option value="${data.FormasDePagamento[i].id_FormasDePagamento}">${data.FormasDePagamento[i].FormasDePagamento}</option>
+                if(data.err){
+                    alert(data.err);
+                }
+
+                $("#id_FormasDePagamento").empty();
+			    for(var i = 0; i < data.formasDePagamento.length; i++){
+				    $("#id_FormasDePagamento").append(`
+   						<option value="${data.formasDePagamento[i].id_FormasDePagamento}">${data.formasDePagamento[i].formaPagamento}</option>
 				    `)
    				}
 		    }).catch(err => {
@@ -124,6 +135,35 @@ class Appointment extends React.Component {
 			    }
 		    });
         });
+
+        
+        this.handleEnderecos();
+    }
+
+    handleEnderecos(){
+        console.log("cheguei");
+
+        const token = getToken();
+            
+        const options = {
+            method: 'post',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify(this.state.id_clinica)
+        }
+
+        fetch('http://ec2-34-201-253-51.compute-1.amazonaws.com:3000/makeAppointment/enderecos', options)
+		.then(res => {
+   			return res.json();
+		})
+		.then(data => { 
+            console.log(data);
+        })
+        .catch(err => {
+            alert(err);
+        })
     }
 
     handleFormaPagamento(e){
@@ -131,7 +171,7 @@ class Appointment extends React.Component {
             [e.target.name]: e.target.value
         }, () => {
             if(this.state.id_FormasDePagamento !== ''){
-                $("#medicos").removeAttr("disabled");
+                $("#id_medico").removeAttr("disabled");
             }
 
             const token = getToken();
@@ -144,16 +184,16 @@ class Appointment extends React.Component {
     			}
 		    }
         
-            fetch('http://ec2-34-201-253-51.compute-1.amazonaws.com:3000/makeAppointment/especialidades', options)
+            fetch('http://ec2-34-201-253-51.compute-1.amazonaws.com:3000/makeAppointment/medicos', options)
 		    .then(res => {
    				return res.json();
 		    })
 		    .then(data => {
-			    for(var i = 0; i < data.clinicas.length; i++){
-                    $("#medicos").empty();
+                $("#id_medico").empty();
 
-				    $("#medicos").append(`
-   						<option value="${data.medicos[i].id_medico}">${data.clinicas[i].medico}</option>
+                for(var i = 0; i < data.medicos.length; i++){
+				    $("#id_medico").append(`
+   						<option value="${data.medicos[i].id_medico}">${data.medicos[i].nome_medico}</option>
 				    `)
    				}
 		    }).catch(err => {
@@ -169,7 +209,7 @@ class Appointment extends React.Component {
             [e.target.name]: e.target.value
         }, () => {
             if(this.state.id_medico !== ''){
-                $("#HorarioConsulta").removeAttr("disabled");
+                $("#inicio_consulta").removeAttr("disabled");
             }
         });
     }
@@ -177,6 +217,11 @@ class Appointment extends React.Component {
     handleHorarioConsulta(e){
         this.setState({
             [e.target.name]: e.target.value
+        }, () => {
+            var consultaDT = this.state.inicio_consulta;
+            consultaDT = Moment(consultaDT).format('YYYY-MM-DD hh:mm:ss');
+
+            this.state.inicio_consulta = consultaDT;
         });
     }
 
@@ -198,21 +243,23 @@ class Appointment extends React.Component {
 		.then(res => {
    		    return res.json();
 		})
-		.then(() => {
-            alert("Consulta marcada com sucesso");
-            window.location.href="/appointList";
+		.then(data => {
+            if(data.err){
+                alert(JSON.stringify(data));
+            } else {
+                window.location.href="/appointList";
+            }
 		}).catch(err => {
 		    if(err){
 			    alert(err);
-                logout();
 			}
 		});
     }
 
     render(){
         return (
-            <div>
-            <nav className="navbar navbar-expand-lg navbar-light bg-light">
+        <div>
+            <nav className="navbar navbar-expand-lg">
 			    <img src={require("../img/logo.png")} className="logo" id="logo" alt="Clínica Médica Oliveira Cohen"></img>
 		    </nav>
 
@@ -221,29 +268,34 @@ class Appointment extends React.Component {
                 <form className="form" method="POST" onSubmit={this.handleSubmit}>
                     <div className="form-group">
                         <label>Selecione a área de atendimento desejada <strong>*</strong></label><br/>
-                        <select className="form-control" id="especialidade" name="especialidade" onChange={this.handleEspecialidades} required></select>
+                        <select className="form-control" id="id_especialidade" name="id_especialidade" onChange={this.handleEspecialidades} required></select>
                     </div><br/>
 
                     <div className="form-group">
                         <label>Selecione a clínica desejada <strong>*</strong></label><br/>
-                        <select className="form-control" id="clinicas" name="clinicas" onChange={this.handleClinicas} disabled required></select>
+                        <select className="form-control" id="id_clinica" name="id_clinica" onChange={this.handleClinicas} disabled required></select>
                     </div><br/>
 
                     <div className="form-group">
+                        <label>Endereço da clínica:</label><br/>
+		 				<input type="text" className="form-control" id="id_endereco" name="id_endereco" disabled/>
+		 			</div><br/>
+
+                    <div className="form-group">
                         <label>Selecione a forma de pagamento desejada <strong>*</strong></label><br/>
-                        <select className="form-control" id="FormasDePagamento" name="FormasDePagamento" onChange={this.handleFormaPagamento} disabled required></select>
+                        <select className="form-control" id="id_FormasDePagamento" name="id_FormasDePagamento" onChange={this.handleFormaPagamento} disabled required></select>
                     </div><br/>
 
                     <div className="form-group">
                         <label>Selecione o médico desejado <strong>*</strong></label><br/>
-                        <select className="form-control" id="medicos" name="medicos" onChange={this.handleMedicos} disabled required></select>
+                        <select className="form-control" id="id_medico" name="id_medico" onChange={this.handleMedicos} disabled required></select>
                     </div><br/>
 
                     <div className="form-group">
                         <label>Selecione o dia e hora da consulta: <strong>*</strong></label><br/>
-                        <input className="form-control" id="HorarioConsulta" name="HorarioConsulta" type="datetime-local" onChange={this.handleHorarioConsulta} disabled required/>
+                        <input className="form-control" id="inicio_consulta" name="inicio_consulta" type="datetime-local" onChange={this.handleHorarioConsulta} disabled required/>
                     </div><br/>
-          
+
                     <div className="alert alert-info" role="alert">
                         Campos marcados com <strong>*</strong> são obrigatórios.
                     </div>
@@ -252,6 +304,6 @@ class Appointment extends React.Component {
                     <a className="btn btn-outline-danger" href="/appointList">Cancelar</a>
                 </form><br/>
             </div>
-            </div>);
+        </div>);
     }
 } export default Appointment
