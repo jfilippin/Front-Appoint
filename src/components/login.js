@@ -48,11 +48,11 @@ class Login extends React.Component {
 	render(){
 		return (
 			<div>
-			<nav className="navbar navbar-expand-lg navbar-light bg-light">
+			<nav className="navbar navbar-expand-lg">
 			    <img src={require("../img/logo.png")} className="logo" id="logo" alt="Clínica Médica Oliveira Cohen"></img>
 		    </nav>
 			<div className="container">        
-         		<h1 className="form-title">Clínica médica</h1>
+         		<h1 className="form-title">Login</h1>
 		 			<form className="form" method="POST" onSubmit={this.handleSubmit}>
 		 				<div className="form-group">
 		 					<input type="text" className="form-control" id="email_paciente" name="email_paciente" onChange={this.handleChange} placeholder="Email" required/>

@@ -139,7 +139,7 @@ class Register extends React.Component {
 	render(){
 		return (
 			<div>
-				<nav className="navbar navbar-expand-lg navbar-light bg-light">
+				<nav className="navbar navbar-expand-lg">
 				    <img src={require("../img/logo.png")} className="logo" id="logo" alt="Clínica Médica Oliveira Cohen"></img>
 			    </nav>
 				<div className="container">
