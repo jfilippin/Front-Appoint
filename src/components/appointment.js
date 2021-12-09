@@ -3,6 +3,7 @@ import $ from 'jquery';
 import { getToken, logout } from '../utils/auth';
 import Moment from 'moment';
 
+/* eslint-disable */
 class Appointment extends React.Component {
     constructor(props) {
         super(props);
@@ -137,7 +138,7 @@ class Appointment extends React.Component {
 
     }
 
-    handleEnderecos(e){
+    handleEnderecos(){
         const token = getToken();
         
         const options = {
@@ -148,8 +149,6 @@ class Appointment extends React.Component {
             },
             body: JSON.stringify(this.state)
         }
-
-        console.log(JSON.stringify(this.state));
 
         fetch('http://ec2-34-201-253-51.compute-1.amazonaws.com:3000/makeAppointment/enderecos', options)
 		.then(res => {
@@ -231,8 +230,6 @@ class Appointment extends React.Component {
     handleSubmit(e){
         e.preventDefault();
 
-        console.log(this.state);
-
         const token = getToken();
             
         const options = {
@@ -250,7 +247,7 @@ class Appointment extends React.Component {
 		})
 		.then(data => {
             if(data.err){
-                alert(JSON.stringify(data));
+                alert(JSON.stringify(data.err));
             } else {
                 window.location.href="/appointList";
             }
