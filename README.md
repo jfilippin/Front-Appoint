@@ -1,6 +1,11 @@
 # Front-Appoint
 Sistema de agendamento de consultas para uma clínica médica fictícia. O frontend inteiro foi criado com React.js e jQuery. Também foi utilizado Bootstrap 5 para sua estilização.
 
+# Tecnologias utilizadas
+* React.js :electron:
+* Bootstrap 5 :b:
+* jQuery :gear:
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
