@@ -1,5 +1,5 @@
 # Front-Appoint
-Sistema de agendamento de consultas para uma clínica médica fictícia.
+Frontend de um sistema de agendamento de consultas para uma clínica médica fictícia.
 
 # Tecnologias utilizadas
 * React.js :electron:
